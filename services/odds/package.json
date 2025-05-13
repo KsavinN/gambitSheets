@@ -1,0 +1,24 @@
+{
+  "name": "@gambitsheets/odds-service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "@gambitsheets/common": "workspace:*",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@gambitsheets/eslint-config": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.11.19",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

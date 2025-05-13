@@ -1,0 +1,23 @@
+{
+  "name": "@gambitsheets/common",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@gambitsheets/eslint-config": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "typescript": "^5.3.3"
+  }
+}
