@@ -36,6 +36,7 @@ export class ExpressServer {
     return this.app;
   }
 
+
   public start(): void {
     this.app.listen(this.port, () => {
       console.log(`${this.serviceName} running on port ${this.port}`);
