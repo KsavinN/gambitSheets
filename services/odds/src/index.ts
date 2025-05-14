@@ -2,6 +2,7 @@ import { ExpressServer, createApiResponse } from '@gambitsheets/common';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { SportsService } from './services/sports.service';
+import prisma from './db';
 
 dotenv.config();
 
@@ -13,14 +14,20 @@ const server = new ExpressServer({
 
 const app = server.getApp();
 
-// Get sports endpoint
+app.get('/sync-sports', async (_req: Request, res: Response) => {
+  const sportsService = SportsService.getInstance();
+  await sportsService.syncSportsWithDb();
+  res.json(createApiResponse({ message: 'Sports synced successfully' }));
+});
+
+
 app.get('/sports', async (_req: Request, res: Response) => {
   try {
-    const sportsService = SportsService.getInstance();
-    const sports = await sportsService.getSports();
+    const sports = await prisma.sport.findMany();
     res.json(createApiResponse(sports));
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch sports' });
+    console.error("Failed to fetch sports from DB", error);
+    res.status(500).json({ error: 'Failed to fetch sports from database' });
   }
 });
 
