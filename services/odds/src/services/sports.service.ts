@@ -1,24 +1,9 @@
-import axios from 'axios';
-import { Sport, SportsResponse } from '../types/sports';
-import dotenv from 'dotenv';
-import prisma from '../db'; // Import Prisma client
-
-dotenv.config();
-
-const API_BASE_URL = 'https://api.the-odds-api.com/v4';
-const API_KEY = process.env.ODDS_API_KEY;
-
-if (!API_KEY) {
-  throw new Error('ODDS_API_KEY environment variable is required');
-}
+import { prisma, Sport } from '@gambitsheets/database'; // Import Prisma client
+import { getSports } from '../api/oddsAPI';
 
 export class SportsService {
   private static instance: SportsService;
-  private apiKey: string;
 
-  private constructor() {
-    this.apiKey = API_KEY as string;
-  }
 
   public static getInstance(): SportsService {
     if (!SportsService.instance) {
@@ -27,25 +12,14 @@ export class SportsService {
     return SportsService.instance;
   }
 
-  async getSports(): Promise<Sport[]> {
-    try {
-      const response = await axios.get<SportsResponse>(`${API_BASE_URL}/sports`, {
-        params: {
-          apiKey: this.apiKey
-        }
-      });
-      return response.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(`Failed to fetch sports: ${error.message}`);
-      }
-      throw error;
-    }
+
+  async getSportsFromDb(): Promise<Sport[]> {
+    return prisma.sport.findMany();
   }
 
   async syncSportsWithDb(): Promise<void> {
     try {
-      const sportsFromApi = await this.getSports();
+      const sportsFromApi = await getSports();
 
       if (!sportsFromApi || sportsFromApi.length === 0) {
         console.log('No sports fetched from API to sync.');

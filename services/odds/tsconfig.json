@@ -8,9 +8,10 @@
     "baseUrl": ".",
     "paths": {
       "@gambitsheets/*": ["../../packages/*/src"]
-    }
+    },
+    "composite": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "../../packages/common" }]
+  "references": [{ "path": "../../packages/common" }, { "path": "../../packages/database" }]
 }

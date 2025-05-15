@@ -1,8 +1,8 @@
 import { ExpressServer } from '@gambitsheets/common';
 import dotenv from 'dotenv';
-import { GoogleSheetsClient } from './services';
+import { GoogleSheetsClient } from './services/googleSheet.service';
 import { Request, Response, RequestHandler } from 'express';
-
+import { prisma } from '@gambitsheets/database';
 
 dotenv.config();
 
@@ -19,6 +19,11 @@ const googleSheetsClient = new GoogleSheetsClient();
 
 // Get the Express app instance
 const app = server.getApp();
+
+app.get('/hello', (req: Request, res: Response) => {
+  console.log('Hello World');
+  res.json({ message: 'Hello World' });
+});
 
 // Endpoint to start OAuth flow
 app.get('/auth/google', (req: Request, res: Response) => {
@@ -42,7 +47,17 @@ const oauthCallback: RequestHandler = async (req, res, next) => {
       sessionStore['access_token'] = tokens.access_token;
     }
 
-    res.send('Authentication successful! You can close this window and return to the application.');
+    // Create a new sheet after successful authentication
+    const sheet = await googleSheetsClient.createSheet();
+    if (sheet.spreadsheetId) {
+      sessionStore['sheet'] = sheet.spreadsheetId;
+    }
+
+    if (sheet.spreadsheetUrl) {
+      res.redirect(sheet.spreadsheetUrl);
+    } else {
+      res.status(500).json({ error: 'Failed to create sheet' });
+    }
   } catch (error) {
     next(error);
   }
@@ -64,11 +79,12 @@ app.get('/create-sheet', async (req: Request, res: Response) => {
 
 });
 
+
 app.get('/sheets/:spreadsheetId', async (req: Request, res: Response) => {
   const { spreadsheetId } = req.params;
 
   if (!spreadsheetId) {
-    res.status(400).json({ error: 'Spreadsheet ID and range are required' });
+    res.status(400).json({ error: 'Spreadsheet ID is required' });
     return;
   }
 
@@ -78,14 +94,45 @@ app.get('/sheets/:spreadsheetId', async (req: Request, res: Response) => {
   }
 
   try {
-    const data = await googleSheetsClient.getSheetData(spreadsheetId);
-    res.json({ data });
+    // Set the spreadsheet ID in the client
+    googleSheetsClient.setSpreadsheetId(spreadsheetId);
+
+    // Get data from all three tabs
+    const [oddsData, betsData, resultsData] = await Promise.all([
+      googleSheetsClient.getSheetData(spreadsheetId, 'Odds!A1:H'),
+      googleSheetsClient.getSheetData(spreadsheetId, 'Bets!A1:A'),
+      googleSheetsClient.getSheetData(spreadsheetId, 'Results!A1:A')
+    ]);
+
+    res.json({
+      odds: oddsData,
+      bets: betsData,
+      results: resultsData
+    });
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching sheet data:', error);
     res.status(500).json({ error: 'Failed to fetch sheet data' });
   }
 });
 
+// Endpoint to sync sheet with latest database data
+app.get('/sheets-sync', async (req: Request, res: Response) => {
+  if (!sessionStore['access_token']) {
+    res.status(401).json({ error: 'No active session. Please authenticate first.' });
+    return;
+  }
+
+  try {
+    const result = await googleSheetsClient.syncSheet();
+    res.json(result);
+  } catch (error) {
+    console.error('Error syncing sheet:', error);
+    res.status(500).json({
+      error: 'Failed to sync sheet',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
 
 // Endpoint to get current session token
 app.get('/session/token', (req: Request, res: Response) => {
