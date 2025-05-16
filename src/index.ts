@@ -1,30 +1,26 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
-import { createApiResponse } from './types/response';
 import dotenv from 'dotenv';
-
+import oddsRouter from './routes/odds';
 
 dotenv.config();
 
-export const config = {
-  port: process.env.PORT || 3000,
-  serviceName: 'Gambit Sheets API'
-}
-
 const app = express();
+const port = process.env.PORT || 3000;
 
-// Setup middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Setup health check
-app.get('/health', (_req: Request, res: Response) => {
-  res.json(createApiResponse({ status: 'ok', service: config.serviceName }));
+// Routes
+app.use('/odds', oddsRouter);
+
+// Health check
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok', service: 'Gambit Sheets API' });
 });
 
-
-
-app.listen(config.port, () => {
-  console.log(`${config.serviceName} running on port ${config.port}`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
