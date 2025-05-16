@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@gambitsheets/common": "workspace:*",
+    "@gambitsheets/database": "workspace:*",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "googleapis": "^148.0.0"

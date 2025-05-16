@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gambit_sheets_db
+    environment:
+      POSTGRES_USER: gambit_user
+      POSTGRES_PASSWORD: gambit_password
+      POSTGRES_DB: gambit_sheets
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gambit_user -d gambit_sheets']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    name: gambit_sheets_postgres_data

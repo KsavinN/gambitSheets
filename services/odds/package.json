@@ -2,6 +2,11 @@
   "name": "@gambitsheets/odds-service",
   "version": "0.0.0",
   "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./src/exports.ts"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
@@ -10,7 +15,8 @@
   },
   "dependencies": {
     "@gambitsheets/common": "workspace:*",
-    "axios": "^1.6.7",
+    "@gambitsheets/database": "workspace:*",
+    "axios": "^1.9.0",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
