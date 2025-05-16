@@ -20,14 +20,12 @@ const sportsService = SportsService.getInstance();
 const eventService = EventService.getInstance();
 const googleSheetService = GoogleSheetService.getInstance();
 
-// Helper function to sync Google Sheet
 async function syncGoogleSheet() {
   try {
     await googleSheetService.syncSheet();
     console.log('Google Sheet synced successfully');
   } catch (error) {
     console.error('Failed to sync Google Sheet:', error);
-    // Don't throw the error as we don't want to fail the main operation
   }
 }
 

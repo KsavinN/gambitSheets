@@ -167,6 +167,7 @@ exports.Prisma.OutcomeScalarFieldEnum = {
   marketId: 'marketId',
   name: 'name',
   price: 'price',
+  point: 'point',
   betLimit: 'betLimit',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

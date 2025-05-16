@@ -2,6 +2,7 @@ export interface Outcome {
   name: string;
   price: number;
   bet_limit?: number;
+  point?: number;
 }
 
 export interface Market {

@@ -74,6 +74,7 @@ model Outcome {
   marketId    String
   name        String   // From API: "Houston Texans"
   price       Float    // From API: 2.23 (Using Float, consider Decimal for precision if needed)
+  point       Float?    // Fromp API: 1 (its used in spread)
   betLimit    Float?   // Optional: From API, if includeBetLimits=true
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

@@ -54,6 +54,9 @@ const oauthCallback: RequestHandler = async (req, res, next) => {
     }
 
     if (sheet.spreadsheetUrl) {
+      if (process.env.WITH_BET_POLLING === 'true') {
+        await googleSheetsClient.startBetPolling();
+      }
       res.redirect(sheet.spreadsheetUrl);
     } else {
       res.status(500).json({ error: 'Failed to create sheet' });
@@ -67,6 +70,7 @@ app.get('/oauth2callback', oauthCallback);
 
 
 app.get('/create-sheet', async (req: Request, res: Response) => {
+
   const sheet = await googleSheetsClient.createSheet();
   if (sheet.spreadsheetUrl) {
     if (sheet.spreadsheetId) {
@@ -142,6 +146,22 @@ app.get('/session/token', (req: Request, res: Response) => {
     return;
   }
   res.json({ access_token: token });
+});
+
+app.get('/stop-bet-polling', async (req: Request, res: Response) => {
+  await googleSheetsClient.stopBetPolling();
+  res.json({ message: 'Bet polling stopped' });
+});
+
+app.get('/start-bet-polling', async (req: Request, res: Response) => {
+  await googleSheetsClient.startBetPolling();
+  res.json({ message: 'Bet polling started' });
+});
+
+
+app.get('/check-all-bets', async (req: Request, res: Response) => {
+  await googleSheetsClient.checkAllBets();
+  res.json({ message: 'All bets checked' });
 });
 
 server.start();

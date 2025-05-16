@@ -5834,11 +5834,13 @@ export namespace Prisma {
 
   export type OutcomeAvgAggregateOutputType = {
     price: number | null
+    point: number | null
     betLimit: number | null
   }
 
   export type OutcomeSumAggregateOutputType = {
     price: number | null
+    point: number | null
     betLimit: number | null
   }
 
@@ -5847,6 +5849,7 @@ export namespace Prisma {
     marketId: string | null
     name: string | null
     price: number | null
+    point: number | null
     betLimit: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5857,6 +5860,7 @@ export namespace Prisma {
     marketId: string | null
     name: string | null
     price: number | null
+    point: number | null
     betLimit: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5867,6 +5871,7 @@ export namespace Prisma {
     marketId: number
     name: number
     price: number
+    point: number
     betLimit: number
     createdAt: number
     updatedAt: number
@@ -5876,11 +5881,13 @@ export namespace Prisma {
 
   export type OutcomeAvgAggregateInputType = {
     price?: true
+    point?: true
     betLimit?: true
   }
 
   export type OutcomeSumAggregateInputType = {
     price?: true
+    point?: true
     betLimit?: true
   }
 
@@ -5889,6 +5896,7 @@ export namespace Prisma {
     marketId?: true
     name?: true
     price?: true
+    point?: true
     betLimit?: true
     createdAt?: true
     updatedAt?: true
@@ -5899,6 +5907,7 @@ export namespace Prisma {
     marketId?: true
     name?: true
     price?: true
+    point?: true
     betLimit?: true
     createdAt?: true
     updatedAt?: true
@@ -5909,6 +5918,7 @@ export namespace Prisma {
     marketId?: true
     name?: true
     price?: true
+    point?: true
     betLimit?: true
     createdAt?: true
     updatedAt?: true
@@ -6006,6 +6016,7 @@ export namespace Prisma {
     marketId: string
     name: string
     price: number
+    point: number | null
     betLimit: number | null
     createdAt: Date
     updatedAt: Date
@@ -6035,6 +6046,7 @@ export namespace Prisma {
     marketId?: boolean
     name?: boolean
     price?: boolean
+    point?: boolean
     betLimit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6046,6 +6058,7 @@ export namespace Prisma {
     marketId?: boolean
     name?: boolean
     price?: boolean
+    point?: boolean
     betLimit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6057,6 +6070,7 @@ export namespace Prisma {
     marketId?: boolean
     name?: boolean
     price?: boolean
+    point?: boolean
     betLimit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6068,12 +6082,13 @@ export namespace Prisma {
     marketId?: boolean
     name?: boolean
     price?: boolean
+    point?: boolean
     betLimit?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OutcomeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "marketId" | "name" | "price" | "betLimit" | "createdAt" | "updatedAt", ExtArgs["result"]["outcome"]>
+  export type OutcomeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "marketId" | "name" | "price" | "point" | "betLimit" | "createdAt" | "updatedAt", ExtArgs["result"]["outcome"]>
   export type OutcomeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     market?: boolean | MarketDefaultArgs<ExtArgs>
   }
@@ -6094,6 +6109,7 @@ export namespace Prisma {
       marketId: string
       name: string
       price: number
+      point: number | null
       betLimit: number | null
       createdAt: Date
       updatedAt: Date
@@ -6525,6 +6541,7 @@ export namespace Prisma {
     readonly marketId: FieldRef<"Outcome", 'String'>
     readonly name: FieldRef<"Outcome", 'String'>
     readonly price: FieldRef<"Outcome", 'Float'>
+    readonly point: FieldRef<"Outcome", 'Float'>
     readonly betLimit: FieldRef<"Outcome", 'Float'>
     readonly createdAt: FieldRef<"Outcome", 'DateTime'>
     readonly updatedAt: FieldRef<"Outcome", 'DateTime'>
@@ -7015,6 +7032,7 @@ export namespace Prisma {
     marketId: 'marketId',
     name: 'name',
     price: 'price',
+    point: 'point',
     betLimit: 'betLimit',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -7407,6 +7425,7 @@ export namespace Prisma {
     marketId?: StringFilter<"Outcome"> | string
     name?: StringFilter<"Outcome"> | string
     price?: FloatFilter<"Outcome"> | number
+    point?: FloatNullableFilter<"Outcome"> | number | null
     betLimit?: FloatNullableFilter<"Outcome"> | number | null
     createdAt?: DateTimeFilter<"Outcome"> | Date | string
     updatedAt?: DateTimeFilter<"Outcome"> | Date | string
@@ -7418,6 +7437,7 @@ export namespace Prisma {
     marketId?: SortOrder
     name?: SortOrder
     price?: SortOrder
+    point?: SortOrderInput | SortOrder
     betLimit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7433,6 +7453,7 @@ export namespace Prisma {
     marketId?: StringFilter<"Outcome"> | string
     name?: StringFilter<"Outcome"> | string
     price?: FloatFilter<"Outcome"> | number
+    point?: FloatNullableFilter<"Outcome"> | number | null
     betLimit?: FloatNullableFilter<"Outcome"> | number | null
     createdAt?: DateTimeFilter<"Outcome"> | Date | string
     updatedAt?: DateTimeFilter<"Outcome"> | Date | string
@@ -7444,6 +7465,7 @@ export namespace Prisma {
     marketId?: SortOrder
     name?: SortOrder
     price?: SortOrder
+    point?: SortOrderInput | SortOrder
     betLimit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7462,6 +7484,7 @@ export namespace Prisma {
     marketId?: StringWithAggregatesFilter<"Outcome"> | string
     name?: StringWithAggregatesFilter<"Outcome"> | string
     price?: FloatWithAggregatesFilter<"Outcome"> | number
+    point?: FloatNullableWithAggregatesFilter<"Outcome"> | number | null
     betLimit?: FloatNullableWithAggregatesFilter<"Outcome"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Outcome"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Outcome"> | Date | string
@@ -7778,6 +7801,7 @@ export namespace Prisma {
     id?: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7789,6 +7813,7 @@ export namespace Prisma {
     marketId: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7798,6 +7823,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7809,6 +7835,7 @@ export namespace Prisma {
     marketId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7819,6 +7846,7 @@ export namespace Prisma {
     marketId: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7828,6 +7856,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7838,6 +7867,7 @@ export namespace Prisma {
     marketId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8147,6 +8177,7 @@ export namespace Prisma {
     marketId?: SortOrder
     name?: SortOrder
     price?: SortOrder
+    point?: SortOrder
     betLimit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8154,6 +8185,7 @@ export namespace Prisma {
 
   export type OutcomeAvgOrderByAggregateInput = {
     price?: SortOrder
+    point?: SortOrder
     betLimit?: SortOrder
   }
 
@@ -8162,6 +8194,7 @@ export namespace Prisma {
     marketId?: SortOrder
     name?: SortOrder
     price?: SortOrder
+    point?: SortOrder
     betLimit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8172,6 +8205,7 @@ export namespace Prisma {
     marketId?: SortOrder
     name?: SortOrder
     price?: SortOrder
+    point?: SortOrder
     betLimit?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8179,6 +8213,7 @@ export namespace Prisma {
 
   export type OutcomeSumOrderByAggregateInput = {
     price?: SortOrder
+    point?: SortOrder
     betLimit?: SortOrder
   }
 
@@ -8941,6 +8976,7 @@ export namespace Prisma {
     id?: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8950,6 +8986,7 @@ export namespace Prisma {
     id?: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9020,6 +9057,7 @@ export namespace Prisma {
     marketId?: StringFilter<"Outcome"> | string
     name?: StringFilter<"Outcome"> | string
     price?: FloatFilter<"Outcome"> | number
+    point?: FloatNullableFilter<"Outcome"> | number | null
     betLimit?: FloatNullableFilter<"Outcome"> | number | null
     createdAt?: DateTimeFilter<"Outcome"> | Date | string
     updatedAt?: DateTimeFilter<"Outcome"> | Date | string
@@ -9195,6 +9233,7 @@ export namespace Prisma {
     id?: string
     name: string
     price: number
+    point?: number | null
     betLimit?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9204,6 +9243,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9213,6 +9253,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9222,6 +9263,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    point?: NullableFloatFieldUpdateOperationsInput | number | null
     betLimit?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

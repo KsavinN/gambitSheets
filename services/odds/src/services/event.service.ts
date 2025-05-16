@@ -65,7 +65,7 @@ export class EventService {
     console.log(`Starting event sync for sport: ${sportKey}`);
 
     const defaultApiOptions: GetEventsOptions = {
-      markets: 'h2h,spreads', // Default markets to sync
+      markets: 'h2h, spreads, totals', // Default markets to sync
       regions: 'us', // Default region
       dateFormat: 'iso',
       oddsFormat: 'decimal',
@@ -139,8 +139,10 @@ export class EventService {
                 const currentOutcomeApi = outcomeApi as OutcomeFromApi;
                 const outcomeData = {
                   price: currentOutcomeApi.price,
+                  point: currentOutcomeApi.point !== undefined ? currentOutcomeApi.point : null,
                   betLimit: currentOutcomeApi.bet_limit !== undefined ? currentOutcomeApi.bet_limit : null,
                 };
+                console.log('outcomeData', outcomeApi);
                 await tx.outcome.upsert({
                   where: { marketId_name: { marketId: dbMarket.id, name: currentOutcomeApi.name } },
                   update: outcomeData,
