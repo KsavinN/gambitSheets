@@ -1,6 +1,25 @@
 version: '3.8'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gambit_sheets_app
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://gambit_user:gambit_password@postgres:5432/gambit_sheets
+      - PGPASSWORD=gambit_password # For psql command in initialization script
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./prisma:/app/prisma
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   postgres:
     image: postgres:16-alpine
     container_name: gambit_sheets_db
@@ -14,9 +33,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U gambit_user -d gambit_sheets']
-      interval: 10s
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 10s
 
 volumes:
   postgres_data:
