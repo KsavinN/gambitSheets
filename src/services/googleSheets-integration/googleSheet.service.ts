@@ -1005,26 +1005,19 @@ export class GoogleSheetsClient {
    * @param interval Polling interval in milliseconds
    * @param callback Function to call when new bet is found
    */
-  async createBetPolling(interval: number = 5000, callback: (bet: BetData) => void) {
+  async createBetPolling(interval: number = 10000) {
     try {
       const spreadsheetId = await this.checkSpreadsheetId();
 
+      if (!spreadsheetId) {
+        throw new Error('Spreadsheet ID is not set');
+      }
+
       const pollBets = async () => {
-        console.log('Polling bets');
-        // Get all values from Bets tab
-        const response = await this.sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range: 'Bets!A:M'
-        });
-        const values = response.data.values || [];
-
-        // Get valid bets using the helper function
-        const validBets = this.processBetsRows(values);
-
-        // Process each valid bet
-        for (const bet of validBets) {
-          await callback(bet);
-        }
+        const response = await this.checkAllBets();
+        const timestamp = new Date().toISOString();
+        console.log(`[${timestamp}] Checking bets...`);
+        console.log(response);
       };
 
       // Start polling
@@ -1047,7 +1040,7 @@ export class GoogleSheetsClient {
     if (this.stopBetPollingID) {
       clearInterval(this.stopBetPollingID);
     }
-    this.stopBetPollingID = await this.createBetPolling(interval, this.simulateAndPushResult);
+    this.stopBetPollingID = await this.createBetPolling(interval);
   }
 
   /**

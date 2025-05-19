@@ -5,10 +5,10 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  // Output path is relative to this schema file location (packages/database/prisma/)
+  provider      = "prisma-client-js"
   // It should point to the node_modules of the 'database' package itself.
-  output   = "../generated/prisma"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {

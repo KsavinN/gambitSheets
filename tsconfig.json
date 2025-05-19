@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "target": "es2016",
+    "module": "commonjs",
     "rootDir": "./src",
-    "composite": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "node"
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "skipLibCheck": true
+  }
 }

@@ -121,11 +121,13 @@ router.get('/session/token', (req: Request, res: Response) => {
 
 router.get('/stop-bet-polling', async (req: Request, res: Response) => {
   await googleSheetsClient.stopBetPolling();
+  console.log('Bet polling stopped');
   res.json({ message: 'Bet polling stopped' });
 });
 
 router.get('/start-bet-polling', async (req: Request, res: Response) => {
   await googleSheetsClient.startBetPolling();
+  console.log('Bet polling started');
   res.json({ message: 'Bet polling started' });
 });
 
