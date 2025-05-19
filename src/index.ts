@@ -20,6 +20,11 @@ app.use(express.json());
 app.use('/odds', oddsRouter);
 app.use('/google', googleSheetsRouter);
 
+
+app.get('/', (_req, res) => {
+  res.redirect('/google/auth');
+});
+
 // Health check
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'Gambit Sheets API' });
