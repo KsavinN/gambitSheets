@@ -71,6 +71,7 @@ export class GoogleSheetsClient {
   private sheets;
   private spreadsheetId: string | null;
   private stopBetPollingID: NodeJS.Timeout | null;
+  private static instance: GoogleSheetsClient | null;
 
   scopes = ['https://www.googleapis.com/auth/spreadsheets'];
 
@@ -84,6 +85,13 @@ export class GoogleSheetsClient {
     this.stopBetPollingID = null;
     this.spreadsheetId = MOCK_googleSheetId;
     this.sheets = google.sheets({ version: 'v4', auth: this.auth });
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new GoogleSheetsClient();
+    }
+    return this.instance;
   }
 
   /**
@@ -1229,7 +1237,7 @@ export class GoogleSheetsClient {
         if (row && row[1] === bet.event && row[8] === bet.bet.toString() && row[9] === bet.selection) {
           await this.sheets.spreadsheets.values.update({
             spreadsheetId,
-            range: `Bets!L${i + 1}`, // Update Status column
+            range: `Bets!M${i + 1}`, // Update Status column (Column M)
             valueInputOption: 'RAW',
             requestBody: {
               values: [['Finished']]

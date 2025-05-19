@@ -1,13 +1,10 @@
 FROM node:20-alpine
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@10.10.0 --activate
+# Install pnpm and PostgreSQL client
+RUN corepack enable && corepack prepare pnpm@10.10.0 --activate && \
+    apk add --no-cache openssl3 postgresql-client
 
 WORKDIR /app
-
-# Install OpenSSL 3.0.x
-RUN apk add --no-cache openssl3
-
 
 # Copy Prisma schema first
 COPY prisma ./prisma/
@@ -18,6 +15,10 @@ COPY package.json pnpm-lock.yaml ./
 # Install dependencies
 RUN pnpm install
 
+# Copy initialization scripts
+COPY scripts/init-db.sh ./scripts/
+COPY start.sh ./
+RUN chmod 755 ./scripts/init-db.sh ./start.sh
 
 # Copy the rest of the application
 COPY . .
@@ -29,5 +30,5 @@ RUN pnpm build
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Start the application
-CMD ["pnpm", "start"] 
+# Use the start script
+CMD ["/bin/sh", "./start.sh"]

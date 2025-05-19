@@ -2,7 +2,7 @@ import { Router, Request, Response, RequestHandler } from 'express';
 import { GoogleSheetsClient } from '../services/googleSheets-integration/googleSheet.service';
 
 const router = Router();
-const googleSheetsClient = new GoogleSheetsClient();
+const googleSheetsClient = GoogleSheetsClient.getInstance();
 
 // Simple in-memory session storage
 const sessionStore: { [key: string]: string } = {};

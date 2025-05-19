@@ -3,17 +3,17 @@ import { createApiResponse } from '../types/response';
 import { SportsService } from '../services/odds/sports.service';
 import { EventService } from '../services/odds/event.service';
 import { GetEventsOptions } from '../api/oddsAPI';
-// import { GoogleSheetService } from '../services/odds/api/googleSheetService';
+import { GoogleSheetsClient } from '../services/googleSheets-integration/googleSheet.service';
 
 const router = Router();
 
 const sportsService = SportsService.getInstance();
 const eventService = EventService.getInstance();
-// const googleSheetService = GoogleSheetService.getInstance();
+const googleSheetService = GoogleSheetsClient.getInstance();
 
 async function syncGoogleSheet() {
   try {
-    // await googleSheetService.syncSheet();
+    await googleSheetService.syncSheet();
     console.log('Google Sheet synced successfully');
   } catch (error) {
     console.error('Failed to sync Google Sheet:', error);

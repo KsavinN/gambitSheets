@@ -161,7 +161,6 @@ export class EventService {
       console.log(`Event sync completed for sport: ${sportKey}`);
     } catch (error) {
       console.error(`Error syncing events for sport ${sportKey}:`, error);
-      throw new Error(`Failed to sync events for sport ${sportKey}.`);
     }
   }
 }
