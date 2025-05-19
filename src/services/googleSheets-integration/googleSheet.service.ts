@@ -355,7 +355,6 @@ export class GoogleSheetsClient {
       // Formula to calculate implied win percentage
       const impliedWinPercentageFormula = '=IF(AND(E2>0;F2>0); 100 - (100 / (E2 + F2)); "")';
       // Formula to calculate actual profit based on Results tab
-      const profitFormula = '=Results!K2';
 
       const rowValues = [
         eventIdFormula,        // A: Event ID
@@ -372,7 +371,6 @@ export class GoogleSheetsClient {
         estimatedProfitFormula,// L: Estimated Profit
         impliedWinPercentageFormula, // M: Implied Win %
         'Pending',            // N: Status
-        profitFormula         // O: Profit
       ];
 
       // Create array of row values for all rows
@@ -1235,12 +1233,13 @@ export class GoogleSheetsClient {
       for (let i = 1; i < betValues.length; i++) {
         const row = betValues[i];
         if (row && row[1] === bet.event && row[8] === bet.bet.toString() && row[9] === bet.selection) {
+          // Update both Status and Profit columns
           await this.sheets.spreadsheets.values.update({
             spreadsheetId,
-            range: `Bets!M${i + 1}`, // Update Status column (Column M)
+            range: `Bets!N${i + 1}:O${i + 1}`, // Update Status (N) and Profit (O) columns
             valueInputOption: 'RAW',
             requestBody: {
-              values: [['Finished']]
+              values: [['Finished', profitLoss.toString()]]
             }
           });
           break;
